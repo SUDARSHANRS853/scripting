@@ -49,7 +49,7 @@ grep -E "input|output" design1.v | sed 's/[;,)]//g' | awk '
 
 {
   for(i=1;i<=NF;i++) {                        # Loop through each word (field) in the line
-    if ($i ~ /\[/) width=$i;                  # If field has [ ] → it's the bus width (e.g. [3:0])
+    if ($i ~ /\[/) width=$i;                  # If field has [ ] → it's the width (e.g. [3:0])
     if ($i ~ /^[A-Za-z_][A-Za-z0-9_]*$/) port=$i;  # If field matches Verilog identifier pattern → port name
   }
   if (port != "")                             # If port name found
