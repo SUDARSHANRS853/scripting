@@ -25,20 +25,20 @@ Script(port_extraction.sh)
 echo "Extracting module and port details..."  # Display starting message
 echo                                          # Print a blank line
 
-# ---------------------- MODULE NAME EXTRACTION ----------------------
+#  MODULE NAME EXTRACTION 
 grep -E "module " design1.v | awk '{print "Module Name:", $2}'  
 # grep → search for line containing "module"
 # awk → print "Module Name:" followed by 2nd field (module name)
 
 echo                                          # Print blank line for spacing
 
-# ---------------------- PRINT TABLE HEADER ----------------------
+#  PRINT TABLE HEADER 
 printf "%-10s %-10s %-10s\n" "Direction" "Width" "Port"  
 # Print column headings (Direction, Width, Port) with fixed spacing
 echo "-------------------------------"         
 # Print separator line
 
-# ---------------------- PORT EXTRACTION ----------------------
+#  PORT EXTRACTION 
 grep -E "input|output" design1.v | sed 's/[;,)]//g' | awk '  
 # grep → find lines containing "input" or "output"
 # sed  → remove characters ; , and ) for cleaner parsing
