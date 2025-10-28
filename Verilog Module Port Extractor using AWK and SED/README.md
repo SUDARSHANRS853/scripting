@@ -21,8 +21,6 @@ endmodule
 Script(port_extraction.sh)
 ```
 #!/bin/bash
-# Verilog Port Extractor using awk, sed, grep
-# Author: Sudarshan R S
 
 echo "Extracting module and port details..."
 
