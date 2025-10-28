@@ -57,3 +57,12 @@ Input      [3:0]      B
 Input      [1:0]      sel
 Output     [3:0]      Y
 ```
+
+
+```
+1.Indicates script should run using Bash.
+2.Displays message about starting extraction process.
+3.Finds lines with module in design.v and prints the module name.
+4.This command finds all lines in design.v containing input or output, removes commas, semicolons, and parentheses using sed, then uses awk to check each line — if it has input, it sets dir="Input", and if it has output, it sets dir="Output" — preparing for further port extraction or formatting.
+5.This AWK block loops through every word (i=1 to NF) in each line — if a word contains [ it saves it as width (like [7:0]), and if a word matches a valid Verilog identifier pattern (letters, digits, or underscore starting with a letter/underscore), it saves it as the port name.
+6.If a port name was found (port != ""), it prints the direction, width, and port name in neatly aligned columns using printf, then resets width and port to empty for processing the next line.
