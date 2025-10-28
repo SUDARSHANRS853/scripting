@@ -55,6 +55,7 @@ Extracting module and port details...
 Module Name: alu
 
 Direction  Width      Port
+-------------------------------
 Input      [3:0]      A
 Input      [3:0]      B
 Input      [1:0]      sel
