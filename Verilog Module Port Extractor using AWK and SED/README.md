@@ -1,10 +1,20 @@
 ## To automatically extract module names, input/output ports, and port widths from Verilog RTL files using Linux text-processing tools (awk, grep, sed).
+
+Why we need it:
+```
+“When we work on RTL design, we often have Verilog files with many input/output ports.
+Manually listing them for documentation takes time.
+So, I wrote this Linux script to automatically read the Verilog file and print all port information neatly in a table.”
+```
+
+
 Tool Used
 ```
  grep → to locate module definitions
  sed → to remove unwanted characters (like commas, semicolons)
  awk → to extract and format port information
 ```
+
 Design.v
 ```
 module alu (input [3:0] A, input [3:0] B, input [1:0] sel, output reg [3:0] Y);
