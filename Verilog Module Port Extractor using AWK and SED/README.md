@@ -20,30 +20,33 @@ endmodule
 ```
 Script(port_extraction.sh)
 ```
-#!/bin/bash
+#!/usr/bin/bash
 
 echo "Extracting module and port details..."
+echo
 
 # Extract module name
-grep -E "module " design.v | awk '{print "Module Name:", $2}'
+grep -E "module " design1.v | awk '{print "Module Name:", $2}'
+echo
+
+# Print table heading
+printf "%-10s %-10s %-10s\n" "Direction" "Width" "Port"
+echo "-------------------------------"
 
 # Extract port list
-grep -E "input|output" design.v | sed 's/[;,)]//g' | awk '
-/input/ {
-  dir="Input"
-}
-/output/ {
-  dir="Output"
-}
+grep -E "input|output" design1.v | sed 's/[;,)]//g' | awk '
+/input/  { dir="Input"  }
+/output/ { dir="Output" }
 {
   for(i=1;i<=NF;i++) {
-    if ($i ~ /\[/) width=$i;
-    if ($i ~ /^[A-Za-z_][A-Za-z0-9_]*$/) port=$i;
+    if ($i ~ /\[/) width=$i;                              # bus width
+    if ($i ~ /^[A-Za-z_][A-Za-z0-9_]*$/) port=$i;         # port name
   }
   if (port != "")
     printf "%-10s %-10s %-10s\n", dir, width, port;
   width=""; port="";
 }'
+
 ```
 Output
 ```
