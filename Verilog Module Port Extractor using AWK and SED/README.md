@@ -4,7 +4,6 @@ Why we need it:
 ```
 “When we work on RTL design, we often have Verilog files with many input/output ports.
 Manually listing them for documentation takes time.
-So, I wrote this Linux script to automatically read the Verilog file and print all port information neatly in a table.”
 ```
 
 
