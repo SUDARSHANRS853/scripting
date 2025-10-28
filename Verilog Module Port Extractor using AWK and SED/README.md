@@ -20,31 +20,41 @@ endmodule
 ```
 Script(port_extraction.sh)
 ```
-#!/usr/bin/bash
+#!/usr/bin/bash                       # Use bash shell to execute the script
 
-echo "Extracting module and port details..."
-echo
+echo "Extracting module and port details..."  # Display starting message
+echo                                          # Print a blank line
 
-# Extract module name
-grep -E "module " design1.v | awk '{print "Module Name:", $2}'
-echo
+# ---------------------- MODULE NAME EXTRACTION ----------------------
+grep -E "module " design1.v | awk '{print "Module Name:", $2}'  
+# grep → search for line containing "module"
+# awk → print "Module Name:" followed by 2nd field (module name)
 
-# Print table heading
-printf "%-10s %-10s %-10s\n" "Direction" "Width" "Port"
-echo "-------------------------------"
+echo                                          # Print blank line for spacing
 
-# Extract port list
-grep -E "input|output" design1.v | sed 's/[;,)]//g' | awk '
-/input/  { dir="Input"  }
-/output/ { dir="Output" }
+# ---------------------- PRINT TABLE HEADER ----------------------
+printf "%-10s %-10s %-10s\n" "Direction" "Width" "Port"  
+# Print column headings (Direction, Width, Port) with fixed spacing
+echo "-------------------------------"         
+# Print separator line
+
+# ---------------------- PORT EXTRACTION ----------------------
+grep -E "input|output" design1.v | sed 's/[;,)]//g' | awk '  
+# grep → find lines containing "input" or "output"
+# sed  → remove characters ; , and ) for cleaner parsing
+# awk  → begin processing each line
+
+/input/  { dir="Input"  }                     # If line has "input", set direction as Input
+/output/ { dir="Output" }                     # If line has "output", set direction as Output
+
 {
-  for(i=1;i<=NF;i++) {
-    if ($i ~ /\[/) width=$i;                              # bus width
-    if ($i ~ /^[A-Za-z_][A-Za-z0-9_]*$/) port=$i;         # port name
+  for(i=1;i<=NF;i++) {                        # Loop through each word (field) in the line
+    if ($i ~ /\[/) width=$i;                  # If field has [ ] → it's the bus width (e.g. [3:0])
+    if ($i ~ /^[A-Za-z_][A-Za-z0-9_]*$/) port=$i;  # If field matches Verilog identifier pattern → port name
   }
-  if (port != "")
-    printf "%-10s %-10s %-10s\n", dir, width, port;
-  width=""; port="";
+  if (port != "")                             # If port name found
+    printf "%-10s %-10s %-10s\n", dir, width, port; # Print Direction, Width, and Port columns
+  width=""; port="";                          # Reset width and port for next line
 }'
 
 ```
